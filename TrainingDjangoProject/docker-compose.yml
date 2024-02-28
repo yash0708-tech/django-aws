@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'demodb'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3307:3306'
+  web:
+    image: yashbtnm/django
+    command: >
+      bash -c "python manage.py makemigrations &&
+               python manage.py migrate &&
+               python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/code
+    ports:
+      - '8000:8000'
+    depends_on:
+      - db
+    environment:
+      DB_NAME: 'demodb'
+      DB_USER: 'root'
+      DB_PASSWORD: 'root'
+      DB_HOST: 'db'
+
+
+  
