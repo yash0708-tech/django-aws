@@ -48,7 +48,7 @@ jobs:
       - run:
           name: Deploy to ec2
           command: |
-            ssh -oStrictHostKeyChecking=no -v ec2-user@ec2-13-232-252-75.ap-south-1.compute.amazonaws.com "sudo su -c './deploy.sh'"
+            ssh -oStrictHostKeyChecking=no -v ec2-user@ec2-13-201-3-46.ap-south-1.compute.amazonaws.com "sudo su -c './deploy.sh'"
 
 workflows:
   version: 2
