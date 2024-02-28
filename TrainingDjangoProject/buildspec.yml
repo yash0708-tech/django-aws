@@ -11,7 +11,7 @@ phases:
   #     - docker network create test
   #     - docker run --name db --network test -p 3306:3306 -e MYSQL_ROOT_PASSWORD=mysql
       
-  #     - cd TrainingDjangoProject/
+      # - cd TrainingDjangoProject/
   #     # Install Python dependencies
   #     - pip install -r requirements.txt
   build:
@@ -22,7 +22,7 @@ phases:
 
       # # Collect static files
       # - python manage.py collectstatic --noinput
-
+      - cd TrainingDjangoProject/
       # Build Docker image
       - docker build -t djangoecr .
 
