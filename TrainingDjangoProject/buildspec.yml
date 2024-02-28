@@ -4,23 +4,24 @@ phases:
   install:
     runtime-versions:
       python: 3.11
-  pre_build:
-    commands:
-      # Install system dependencies
-      - yum update -y
+  # pre_build:
+  #   commands:
+  #     # Install system dependencies
+  #     - yum update -y
+  #     - docker network create test
+  #     - docker run --name db --network test -p 3306:3306 -e MYSQL_ROOT_PASSWORD=mysql
       
-      - cd TrainingDjangoProject/
-      # Install Python dependencies
-      - pip install -r requirements.txt
+  #     - cd TrainingDjangoProject/
+  #     # Install Python dependencies
+  #     - pip install -r requirements.txt
   build:
     commands:
-      - 
       # Run Django database migrations
-      - python manage.py makemigrations
-      - python manage.py migrate
+      # - python manage.py makemigrations
+      # - python manage.py migrate
 
-      # Collect static files
-      - python manage.py collectstatic --noinput
+      # # Collect static files
+      # - python manage.py collectstatic --noinput
 
       # Build Docker image
       - docker build -t djangoecr .
