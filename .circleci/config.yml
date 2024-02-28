@@ -37,6 +37,9 @@ jobs:
       - run:
           name: Push Docker image to Amazon ECR
           command: |
+            aws configure set aws_access_key_id AKIA3FLD26H7FC2WIWUO
+            aws configure set aws_secret_access_key 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
+            aws configure set default.region ap-south-1
             aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 767397917182.dkr.ecr.ap-south-1.amazonaws.com
             docker tag djangoapplication:latest 767397917182.dkr.ecr.ap-south-1.amazonaws.com/djangoapplication:latest
             docker push 767397917182.dkr.ecr.ap-south-1.amazonaws.com/djangoapplication:latest
