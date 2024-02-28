@@ -15,7 +15,7 @@ services:
       DB_NAME: 'demodb'
       DB_USER: 'admin'
       DB_PASSWORD: 'yash1234'
-      DB_HOST: 'database-1.cveyga2kssgt.us-east-1.rds.amazonaws.com'
+      DB_HOST: 'database-1.c9ai66qwgay7.ap-south-1.rds.amazonaws.com'
 
 
   
