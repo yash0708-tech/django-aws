@@ -1,0 +1,57 @@
+version: 2.1
+
+jobs:
+  build:
+    machine:
+      image: default
+    steps:
+      - checkout
+
+      # Install Python and Django dependencies
+      - run:
+          name: Install Python and Django dependencies
+          command: |
+            sudo apt-get update
+            sudo apt-get install python3 python3-pip python3-venv -y
+            python3 -m venv env
+            source env/bin/activate
+            
+      # Install Docker and dependencies
+      - run:
+          name: Install Docker and dependencies
+          command: |
+            sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
+            curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+            sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" -y
+            sudo apt-get update -y
+            sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+            sudo apt-get install awscli
+      # Build Docker image
+      - run:
+          name: Build Docker image
+          command: |
+            cd TrainingDjangoProject/
+            docker build -t djangoapplication .
+
+      # Authenticate AWS ECR and push Docker image
+      - run:
+          name: Push Docker image to Amazon ECR
+          command: |
+            aws configure set aws_access_key_id AKIA3FLD26H7FC2WIWUO
+            aws configure set aws_secret_access_key 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
+            aws configure set default.region ap-south-1
+            aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 767397917182.dkr.ecr.ap-south-1.amazonaws.com
+            docker tag djangoapplication:latest 767397917182.dkr.ecr.ap-south-1.amazonaws.com/djangoapplication:latest
+            docker push 767397917182.dkr.ecr.ap-south-1.amazonaws.com/djangoapplication:latest
+
+      # Deploy to ec2
+      - run:
+          name: Deploy to ec2
+          command: |
+            ssh -oStrictHostKeyChecking=no -v ec2-user@ec2-13-232-252-75.ap-south-1.compute.amazonaws.com "sudo su -c './deploy.sh'"
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
