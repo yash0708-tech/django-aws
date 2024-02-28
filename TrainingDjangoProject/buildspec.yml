@@ -7,28 +7,28 @@ phases:
   pre_build:
     commands:
       # Install system dependencies
-      apt-get update
-      apt-get install -y mysql-client
+      - apt-get update
+      - apt-get install -y mysql-client
 
       # Install Python dependencies
-      pip install -r requirements.txt
+      - pip install -r requirements.txt
   build:
     commands:
       # Run Django database migrations
-      python manage.py makemigrations
-      python manage.py migrate
+      - python manage.py makemigrations
+      - python manage.py migrate
 
       # Collect static files
-      python manage.py collectstatic --noinput
+      - python manage.py collectstatic --noinput
 
       # Build Docker image
-      docker build -t djangoecr .
+      - docker build -t djangoecr .
 
       # Tag the Docker image with the ECR repository URI
-      docker tag djangoecr:latest 767397917182.dkr.ecr.ap-south-1.amazonaws.com/djangoapplication:latest
+      - docker tag djangoecr:latest 767397917182.dkr.ecr.ap-south-1.amazonaws.com/djangoapplication:latest
   post_build:
     commands:
       # Log in to Amazon ECR
-      aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 767397917182.dkr.ecr.ap-south-1.amazonaws.com
+      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 767397917182.dkr.ecr.ap-south-1.amazonaws.com
       # Push Docker image to Amazon ECR
-      docker push 767397917182.dkr.ecr.ap-south-1.amazonaws.com/djangoapplication:latest
+      - docker push 767397917182.dkr.ecr.ap-south-1.amazonaws.com/djangoapplication:latest
