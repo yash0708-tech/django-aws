@@ -14,7 +14,7 @@ phases:
       - pip install -r requirements.txt
   build:
     commands:
-      - cd TrainingDjangoProject/
+      - 
       # Run Django database migrations
       - python manage.py makemigrations
       - python manage.py migrate
