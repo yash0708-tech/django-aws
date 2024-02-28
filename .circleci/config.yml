@@ -30,6 +30,7 @@ jobs:
       - run:
           name: Build Docker image
           command: |
+            cd TrainingDjangoProject/
             docker build -t djangoapplication .
 
       # Authenticate AWS ECR and push Docker image
