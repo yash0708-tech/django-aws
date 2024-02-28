@@ -7,8 +7,8 @@ phases:
   pre_build:
     commands:
       # Install system dependencies
-      - apt-get update
-      - apt-get install -y mysql-client
+      - yum update -y
+      - yum install -y mysql
 
       # Install Python dependencies
       - pip install -r requirements.txt
