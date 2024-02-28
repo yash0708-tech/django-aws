@@ -1,31 +1,21 @@
 version: '3'
 
 services:
-  db:
-    image: mysql
-    restart: always
-    environment:
-      MYSQL_DATABASE: 'demodb'
-      MYSQL_ROOT_PASSWORD: 'root'
-    ports:
-      - '3307:3306'
   web:
-    image: yashbtnm/django
+    image: 767397917182.dkr.ecr.ap-south-1.amazonaws.com/djangoapplication:latest
     command: >
       bash -c "python manage.py makemigrations &&
                python manage.py migrate &&
                python manage.py runserver 0.0.0.0:8000"
     volumes:
-      - .:/code
+      - .:/code/TrainingDjangoProject/
     ports:
       - '8000:8000'
-    depends_on:
-      - db
     environment:
       DB_NAME: 'demodb'
-      DB_USER: 'root'
-      DB_PASSWORD: 'root'
-      DB_HOST: 'db'
+      DB_USER: 'admin'
+      DB_PASSWORD: 'yash1234'
+      DB_HOST: 'database-1.cveyga2kssgt.us-east-1.rds.amazonaws.com'
 
 
   
